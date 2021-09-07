@@ -1,0 +1,56 @@
+
+
+
+.tool-list .tool:not(:last-child){
+    margin-right: 1.3rem;
+}
+
+.tool-list .tool-seperate{
+    margin-right: 1.9rem !important;
+}
+
+.tool-list .tool-seperate::after{
+    margin:0 9px;
+    position: absolute;
+    content: '';
+    width:1px;
+    transform: translateY(-1px);
+    height: 1.8rem;
+    background-color: #ccc;
+}
+
+
+.tool-editor{
+    display: inline-block;
+    background-color: black;
+    border-radius: .8rem;
+    transition: right .2s  ease-in-out;
+    position: absolute;
+    z-index: 99;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    animation-name: moveInBottom;
+    animation-duration: 1s;
+}
+
+.tool-list{
+    list-style-type: none;
+    display: flex;
+    padding: .9rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    color: white;
+
+}
+
+
+.tool-editor::after{
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    position: absolute;
+    left: 50%;
+    transform: rotate(45deg);
+    top: 85%;
+    z-index: 1;
+}

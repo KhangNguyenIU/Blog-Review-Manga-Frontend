@@ -1,9 +1,9 @@
-import TextEditor from "../Components/blog/TextEditor";
+import TextEditor from "../Components/BlogEditor/TextEditor";
 
 
 export default function Home() {
   return (
-    <div className="container">
+    <div >
     <TextEditor/>
     </div>
   )
