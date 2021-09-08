@@ -10,22 +10,22 @@ const ToolEditor = (props) => {
     const [embedButton, setEmbedButton] = useState(false)
     const [quoteButton, setQuoteButton] = useState(false)
 
-    // function restoreSelection(range) {
-    //     if (range) {
-    //         if (window.getSelection) {
-    //             var sel = window.getSelection();
-    //             sel.removeAllRanges();
-    //             sel.addRange(range);
-    //         } else if (document.selection && range.select) {
-    //             range.select();
-    //         }
-    //     }
-    // }
+    function restoreSelection(range) {
+        if (range) {
+            if (window.getSelection) {
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else if (document.selection && range.select) {
+                range.select();
+            }
+        }
+    }
 
     function handleToolButtonClick() {
-        // restoreSelection(props.selected)
-        // var selection = props.saveSelection()
-        // props.setSelected(selection)
+        restoreSelection(props.selected)
+        var selection = props.saveSelection()
+        props.setSelected(selection)
     }
 
     return (
