@@ -1,4 +1,5 @@
 .text-editor{
+  // display: inline;
     outline: none;
     margin-bottom: 3rem;
     font-family: 'Hina Mincho', serif;
@@ -19,11 +20,44 @@
       font-size: 2rem;
   }
 
- .full-side-img{
+ .left-side-img{
    display: block;
-   margin-bottom: 4rem;
-   max-width: 100%;
+  margin-right:3rem;
+  margin-bottom: 3rem;
+   width: 50rem;
+  max-height: 70rem;
+ margin-left: -15rem;
+ float: left;
+ }
+
+.img{
+  width: 100%;
+  object-fit: cover;
+  max-height: 100%;
+}
+
+ .full-side-img{
+   position: relative;
    width: 100%;
    max-height: 70rem;
-   object-fit: cover;
+  margin-bottom: 4rem;
+
  }
+
+ .icon-single{
+  display: inline-block;
+ 
+  //  margin: .5rem 1rem;
+  padding: .8rem 1rem;
+  &:hover{
+    background-color: #eee;
+    border-radius: 3px;
+    color: black;
+  } 
+  
+  &--icon{
+    // margin-left: auto;
+    // margin-right: auto;
+  }
+ }
+
