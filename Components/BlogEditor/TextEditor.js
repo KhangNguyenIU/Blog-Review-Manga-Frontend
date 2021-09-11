@@ -1,111 +1,101 @@
-import { nanoid } from 'nanoid';
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import ToolEditor from './ToolEditor';
-import { AiOutlineCloudUpload, AiOutlinePlus } from 'react-icons/ai'
-import { RiDeleteBinLine } from 'react-icons/ri'
-import { IconButton } from '@material-ui/core';
-import ContentEditable from 'react-contenteditable';
+import { IconButton } from '@material-ui/core'
+import { nanoid } from 'nanoid'
+import React, { useEffect, useRef, useState } from 'react'
+import ContentEditable from 'react-contenteditable'
+import ToolEditor from './ToolEditor'
+import { AiOutlineCloudUpload, AiOutlinePlus, AiOutlinePicLeft, AiOutlineClose } from 'react-icons/ai'
+import { saveSelection } from '../../utilites/selection.util'
+import { CgDisplayFullwidth } from 'react-icons/cg'
+import EditCaretPositioning from '../../utilites/editCaretPosition'
 const TextEditor = () => {
+    const [positionX, setPositionX] = useState(0)
+    const [positionY, setPositionY] = useState(0)
     const [openTool, setOpenTool] = useState(false)
-    const [openPhoto, setOpenPhoto] = useState([{ id: "first", open: true }])
-    const [photoToolPosY, setPhotoToolPosY] = useState(0)
-
-
+    const [focused, setFocused] = useState(0)
     const [selected, setSelected] = useState({})
     const [previewedImage, setPreviewedImage] = useState('')
+    const [previewedBackground, setPreviewBackground] = useState('')
     const [isUploadImage, setIsUploadImage] = useState(false)
-
-    const [elements, setElements] = useState([{ id: "first", html: ""}])
-    const [focused, setFocused] = useState(0)
-
+    const [isUploadBackground, setIsUploadBackground] = useState(false)
     const [title, setTitle] = useState("")
+    const [elements, setElements] = useState([{ id: "first-line", html: "", open: true, type: "text" }])
     const refs = useRef([])
 
+
     // useEffect(() => {
-    //     refs.current[focused].focus()
+    //     if (refs.current[focused].current) {
+    //         console.log("current", refs.current[focused].current);
+    //         refs.current[focused].current.focus()
+    //     }
+    //     else if (refs.current[focused]) {
+    //         console.log("focus", refs.current[focused]);
+    //         refs.current[focused].el.current.focus()
+    //     }
     // }, [focused])
 
 
-    function saveSelection() {
-        if (window.getSelection) {
-            var sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                return sel.getRangeAt(0);
-            }
-        } else if (document.selection && document.selection.createRange) {
-            return document.selection.createRange();
+
+
+    const handleChange = (index) => e => {
+        // console.log("change", e.target.value);
+        elements[index].html = e.target.value
+        if (e.target.value.length > 1) {
+            elements[index].open = false
+        } else {
+            elements[index].open = true
         }
-        return null;
+        setElements([...elements])
+    }
+
+    const handleKeyDown = (index) => e => {
+        if (e.keyCode == 13) {
+            e.preventDefault()
+            elements.splice(index + 1, 0, { id: nanoid(3), html: '', open: true, type: "text" })
+            setElements([...elements])
+            setFocused(index + 1)
+        }
+        if (e.keyCode == 8 && elements[index].html == "" && index != 0) {
+            elements.splice(index, 1)
+            setElements([...elements])
+            setFocused(index - 1)
+        }
     }
 
 
+    const handleMouseDown = (index) => e => {
+        // console.log("eMouseDown", e);
+        if (openTool == false) {
+            let tempPositionX = e.layerX == undefined ? e.nativeEvent.layerX : e.layerX
+            let tempPositionY = e.layerY == undefined ? e.nativeEvent.layerY : e.layerY
+            // console.log("mousedonw", tempPositionX, tempPositionY);
+            setPositionX(tempPositionX)
+            setPositionY(tempPositionY - 50)
+        }
+    }
 
-    const handleMouseUp = index => (event) => {
-
-        console.log("mouseupEVENT", event);
-
+    const handleMouseUp = (index) => e => {
+        // console.log("eMouseUp", e);
         var selection = saveSelection()
         //get relative x-position of focused element
-        let relativePositionX = event.layerX == undefined ? event.nativeEvent.layerX : event.layerX
-        let relativePositionY = event.layerY == undefined ? event.nativeEvent.layerY : event.layerY
+        let relativePositionX = e.layerX == undefined ? e.nativeEvent.layerX : e.layerX
+        let relativePositionY = e.layerY == undefined ? e.nativeEvent.layerY : e.layerY
 
-        console.log("mouseup", relativePositionX, relativePositionY, positionY);
+        // console.log("mouseup", relativePositionX, relativePositionY, positionY);
 
         setSelected(selection)
-        console.log(selection);
+        // // let caret = EditCaretPositioning.saveSelection(refs.current[index])
+        // console.log("window",window);
+        // console.log(document.createRange);
 
-        console.log(document.getSelection())
-        if (!document.getSelection().isCollapsed && !openTool) {
-            setPositionX((positionX + relativePositionX) / 2 - 70)
-            setPositionY(positionY)
-            console.log({ positionX, positionY })
+        if (!document.getSelection().isCollapsed && openTool == false) {
+            setPositionX(((relativePositionX + positionX) / 2) - 60)
             setOpenTool(true)
+            // restoreSelection(selected)
         } else {
             setOpenTool(false)
         }
     }
-    const handleMouseDown = (index) => e => {
-        console.log("mousedownEVENT", e);
 
-        let relativePositionX = e.layerX == undefined ? e.nativeEvent.layerX : e.layerX
-        let relativePositionY = e.layerY == undefined ? e.nativeEvent.layerY : e.layerY
-        // console.log("mousedonw", relativePositionX, relativePositionY);
-        if (!openTool) {
-            setPositionX(relativePositionX)
-            setPositionY(relativePositionY - 50)
-        }
-
-    }
-
-    const handleKeyDown = ( index) => async (e) => {
-        // console.log("key down", e.target.innerHTML);
-        // set hide photo tool when typing
-
-
-
-        // create new line when press ENTER
-        if (e.keyCode == 13) {
-            e.preventDefault()
-            const newId = nanoid(4)
-            elements.splice(index + 1, 0, { id: newId, html: ""})
-            setElements([...elements])
-            setFocused(index + 1)
-        }
-
-        // delete current line when press BACK SPACE
-        if (e.keyCode == 8 && e.target.innerHTML == "" && id !== "first") {
-            elements.splice(index, 1)
-            setElements([...elements])
-        }
-
-        // open photo tool when empty
-        if (e.target.innerHTML.length <= 1) {
-            elements[index].open = true
-            setElements([...elements])
-        }
-
-
-    }
 
     const handleTitleChange = (e) => {
         if (e.keyCode !== 13)
@@ -113,15 +103,23 @@ const TextEditor = () => {
     }
 
     const handlePreviewImage = (index) => (e) => {
-        console.log("review", index);
+        // console.log("review", index);
         if (e.target.files && e.target.files[0]) {
             let reader = new FileReader()
 
             reader.onload = function (e) {
                 setPreviewedImage(e.target.result)
                 setIsUploadImage(true)
-                // elements.splice(index, 0, { type: "img", class: "full-side-img", src:e.target.result })
-                // setElements([...elements])
+                elements.splice(index, 0,
+                    {
+                        type: "img",
+                        class: "left-side-img",
+                        src: e.target.result,
+                        id: nanoid(3),
+                        position: 1
+                    })
+                setElements([...elements])
+                setFocused(index + 1)
             }
             reader.readAsDataURL(e.target.files[0])
         }
@@ -129,54 +127,48 @@ const TextEditor = () => {
 
     }
 
-    const handleChange = (index) => e => {
-        // console.log("on change", e);
-        elements[index].html = e.target.value
-        setElements([...elements])
-    }
+    const handlePreviewBackground = (e) => {
+        console.log("reviewBK")
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader()
 
-    const handleFocus = (index) => (e) => {
-        if (elements[index].html === "") {
-            elements.map((el, i) => {
-                if (i != index) {
-                    el.open = false
-                } else {
-                    el.open = true
-                }
-            })
-            setElements([...elements])
+            reader.onload = function (e) {
+                setPreviewBackground(e.target.result)
+                setIsUploadBackground(true)
+
+            }
+            reader.readAsDataURL(e.target.files[0])
         }
+
+
     }
 
-    const handlePhotoButtonClick = (index) => e => {
-        elements.splice(index, 0, { type: "img", class: "full-side-img", src: { previewedImage } })
-    }
-
-    const ImagePreview = () => {
+    const ToolUploadImage = (props) => {
         return (
-            <div style={{ position: 'relative', marginBottom: '4rem' }}>
-                <img
-                    className="general-image"
-                    src={previewedImage}
-                    alt="alt-img" >
-                </img>
-                <div className={`tool-editor`}
-                    style={{ position: 'absolute', top: "-5rem", left: "50%" }}>
-                    <ul className="tool-list">
-                        <li className="tool">
-                            <RiDeleteBinLine
-                                style={{
-                                    fontSize: '3rem',
-                                    fontWeight: '100',
-                                }}
-                                onClick={() => { setPreviewedImage(""); setIsUploadImage(false) }} />
-                        </li>
-                    </ul>
+            <React.Fragment>
+                <div
+                    style={{ position: 'absolute', left: '-50px', margin: 'auto' }}
+                >
 
+                    <label style={{ display: 'inline-block', cursor: 'pointer' }}
+                        htmlFor="upload-body-image"
+                    >
 
+                        <IconButton size="medium" component="span">
+                            <AiOutlinePlus />
+                        </IconButton>
+                    </label>
+                    <input
+                        type="file"
+                        hidden
+                        name={props.index}
+                        accept="image/*"
+                        id="upload-body-image"
+                        onChange={handlePreviewImage(focused)}
+                    />
                 </div>
 
-            </div>
+            </React.Fragment>
         )
     }
 
@@ -199,7 +191,7 @@ const TextEditor = () => {
                         id="image-input"
                         name="image-input"
                         className="image-input"
-                        onChange={handlePreviewImage} />
+                        onChange={handlePreviewBackground} />
                     <AiOutlineCloudUpload style={{ fontSize: '6rem' }} />
                     <p>Browse your background photo</p>
                 </label>
@@ -208,65 +200,156 @@ const TextEditor = () => {
         )
     }
 
-    const ToolUploadImage = (props) => {
+
+    const TitleText = () => {
         return (
-            <React.Fragment>
-                <div className={` ${props.open ? "" : "hidden"}`}
-                    style={{ position: 'absolute', left: '-60px', top: "-5px" }}
-                >
-                    {/* <input 
-                     accept="image/*"  
-                     id="upload-body-image" 
-                     hidden type="file"
-                     onChange={handlePreviewImage(props.index)}
-                     /> */}
-                    <label htmlFor="upload-body-image">
-                        <IconButton size="medium" component="span">
-                            <AiOutlinePlus className="icon-small" />
-                        </IconButton>
-
-                    </label>
-                </div>
-
-            </React.Fragment>
+            <p className="title-primary"
+                style={{ marginTop: '100px', marginBottom: '50px' }}
+                contentEditable
+                placeholder="Title..."
+                onKeyDown={handleTitleChange}
+            >
+            </p>
         )
     }
+
+    const BodyImage = (props) => {
+        const index = props.index
+        console.log({ index });
+        return (
+            <div
+                className={`${props.position == 1 ? "full-side-img" : "left-side-img"}`}
+                id={props.id}
+                ref={props.innerref}
+            >
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="icon-single" style={{ color: `${props.position == 0 ? "red" : 'black'}` }}>
+                        <AiOutlinePicLeft
+                            className="icon-single--icon"
+                            onClick={() => {
+                                console.log(props.index);
+
+                                elements[props.index].position = 0
+                                setElements([...elements])
+                            }}
+                        />
+                    </div>
+
+                    <div className="icon-single" style={{ color: `${props.position == 1 ? "red" : "black"}` }}>
+                        <CgDisplayFullwidth
+                            onClick={() => {
+                                console.log(props.index);
+                                elements[props.index].position = 1
+                                setElements([...elements])
+                            }} />
+                    </div>
+
+                    <div className="icon-single">
+                        <AiOutlineClose
+                            onClick={() => {
+                                elements.splice(props.index, 1)
+                                setElements([...elements])
+                                // setFocused(props.index)
+                            }}
+                        />
+                    </div>
+                </div>
+                <img
+                    src={props.src}
+                    className="img"
+                />
+            </div>
+        )
+    }
+
+    const ImagePreview = () => {
+        return (
+            <div style={{ display:'block',textAlign:'center',marginBottom: '4rem' }}>
+                       <div className="icon-single"
+                    >
+                            <AiOutlineClose
+                                onClick={() => { setPreviewBackground(""); setIsUploadBackground(false) }} />
+     
+                </div>
+                <img
+                    className="general-image"
+                    src={previewedBackground}
+                    alt="alt-img" >
+                </img>
+         
+
+            </div>
+        )
+    }
+
     return (
         <React.Fragment>
-       
 
+            <TitleText />
 
             {
-                isUploadImage ?
+                isUploadBackground ?
                     <ImagePreview />
                     :
                     <BackGroundImageUpload />
             }
+            <div className="container relative">
+                <div>
+                    {
+                        elements.map((el, index) => (
+                            <div key={index}>
 
-            <div
-                className="container "
-                style={{ position: 'relative' }}
-            >
-                {
-                    elements.map((el, index) => (
-                        <ContentEditable
-                            key={index}
-                            className="text-editor"
-                            id={el.id}
-                            html={el.html}
-                            placeholder="typing..."
-                            onChange={handleChange(index)}
-                            onKeyDown={handleKeyDown(index)}
-                            onMouseDown={handleMouseDown(index)}
-                            onMouseUp={handleMouseUp(index)}
-                            // onFocus={handleFocus(index)}
-                            // tagName="p"
-                        >
+                                {
+                                    el.type == "text"
+                                        ?
+                                        <div key={index}
+                                            style={{ display: 'block' }}
+                                            onMouseDown={handleMouseDown(index)}
+                                            onMouseUp={handleMouseUp(index)}
+                                        >
 
-                        </ContentEditable>
+                                            {
+                                                el.open &&
+                                                <ToolUploadImage index={index} />
 
-                ))
-                }
+                                            }
+                                            <ContentEditable
+                                                innerRef={(curRef) => refs.current[index] = curRef}
+                                                key={index}
+                                                className="text-editor"
+                                                id={el.id}
+
+                                                contentEditable={true}
+                                                placeholder="Write your story..."
+                                                html={el.html}
+                                                onChange={handleChange(index)}
+                                                onKeyDown={handleKeyDown(index)}
+                                                onFocus={() => setFocused(index)}
+                                                tagName="p"
+                                                // ref={refs.current[index]}
+                                            >
+                                            </ContentEditable>
+
+                          
+                                        </div>
+                                        :
+                                        <BodyImage
+                                            src={el.src}
+                                            class={el.class}
+                                            index={index}
+                                            id={el.id}
+                                            position={el.position}
+                                            innerref={(el) => refs.current[index] = el}
+
+                                        />
+
+
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
+
                 <ToolEditor
                     openTool={openTool}
                     positionX={positionX}
@@ -276,10 +359,9 @@ const TextEditor = () => {
                     saveSelection={saveSelection}
                 />
 
-            </div >
 
+            </div>
         </React.Fragment>
-
     )
 }
 
