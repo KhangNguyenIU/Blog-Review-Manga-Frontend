@@ -1,40 +1,30 @@
-import { nanoid } from 'nanoid'
-import React, { useEffect, useRef, useState } from 'react'
-import ToolEditor from '../Components/BlogEditor/ToolEditor'
 
-import { DraftailEditor } from "draftail";
-import { Editor, EditorState, RichUtils } from "draft-js"
-const Test = () => {
+import React, { useState } from 'react'
+// import DanteEditor, { DanteTooltipConfig, Icons ,h2} from 'dante3'
+import Dante from 'Dante2'
 
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+/**
+* @author
+* @function DraftText
+**/
 
-    const handleKeyCommand=(command, editorState) =>{
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-    
-        if (newState) {
-          this.onChange(newState);
-          return 'handled';
-        }
-    
-        return 'not-handled';
-      }
-
+const DraftText = (props) => {
     return (
         <React.Fragment>
+        
+            <div className="container text-editor" >
 
-            <div className="container" style={{ marginTop: "200px" , border:'1px solid black'}}>
-                <Editor
-                editorState={editorState}
-                onChange ={setEditorState}
-                // handleKeyCommand={handleKeyCommand}
-
-                >
-                    
-                </Editor>
+                <Dante
+                    // content={h2}
+                    bodyPlaceholder={"Do what you will"}
+                    default_wrappers={[{ className: 'text-editor', block: 'unstyled' }]}
+                />
 
             </div>
         </React.Fragment>
+
     )
+
 }
 
-export default Test
+export default DraftText

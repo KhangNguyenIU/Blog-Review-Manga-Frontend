@@ -1,7 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { nanoid } from 'nanoid'
 import React, { useEffect, useRef, useState } from 'react'
-import ContentEditable from 'react-contenteditable'
 import ToolEditor from './ToolEditor'
 import { AiOutlineCloudUpload, AiOutlinePlus, AiOutlinePicLeft, AiOutlineClose } from 'react-icons/ai'
 import { saveSelection } from '../../utilites/selection.util'
@@ -15,23 +14,11 @@ const TextEditor = () => {
     const [selected, setSelected] = useState({})
     const [previewedImage, setPreviewedImage] = useState('')
     const [previewedBackground, setPreviewBackground] = useState('')
-    const [isUploadImage, setIsUploadImage] = useState(false)
     const [isUploadBackground, setIsUploadBackground] = useState(false)
+    const [isUploadImage, setIsUploadImage] = useState(false)
     const [title, setTitle] = useState("")
     const [elements, setElements] = useState([{ id: "first-line", html: "", open: true, type: "text" }])
     const refs = useRef([])
-
-
-    // useEffect(() => {
-    //     if (refs.current[focused].current) {
-    //         console.log("current", refs.current[focused].current);
-    //         refs.current[focused].current.focus()
-    //     }
-    //     else if (refs.current[focused]) {
-    //         console.log("focus", refs.current[focused]);
-    //         refs.current[focused].el.current.focus()
-    //     }
-    // }, [focused])
 
 
 
@@ -313,7 +300,7 @@ const TextEditor = () => {
                                                 <ToolUploadImage index={index} />
 
                                             }
-                                            <ContentEditable
+                                            {/* <ContentEditable
                                                 innerRef={(curRef) => refs.current[index] = curRef}
                                                 key={index}
                                                 className="text-editor"
@@ -328,7 +315,7 @@ const TextEditor = () => {
                                                 tagName="p"
                                                 // ref={refs.current[index]}
                                             >
-                                            </ContentEditable>
+                                            </ContentEditable> */}
 
                           
                                         </div>
