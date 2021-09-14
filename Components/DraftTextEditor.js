@@ -8,85 +8,26 @@ import {
     AiOutlineClose
 } from 'react-icons/ai'
 import { convertToHTML } from 'draft-convert';
+import UnsplashImage from './UnsplashImage';
 /**
 * @author
 * @function DraftText
 **/
 
-const data =
-{
-    "blocks": [
-        {
-            "key": "8i090",
-            "text": "Hello CodePulse!",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [
-                {
-                    "offset": 0,
-                    "length": 16,
-                    "style": "BOLD"
-                }
-            ],
-            "entityRanges": [],
-            "data": {}
-        },
-        {
-            "key": "42ncd",
-            "text": "This text should be underlined.",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [
-                {
-                    "offset": 0,
-                    "length": 31,
-                    "style": "UNDERLINE"
-                }
-            ],
-            "entityRanges": [],
-            "data": {}
-        },
-        {
-            "key": "327r6",
-            "text": "And this text should be italic.",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [
-                {
-                    "offset": 0,
-                    "length": 31,
-                    "style": "ITALIC"
-                }
-            ],
-            "entityRanges": [],
-            "data": {}
-        }
-    ],
-    "entityMap": {}
-}
 
 
 const DraftTextEditor = (props) => {
-
-
     const [title, setTitle] = useState("")
     const [previewedBackground, setPreviewBackground] = useState('')
     const [isUploadBackground, setIsUploadBackground] = useState(false)
+    const [isOpenUnsplash, setOpenUnsplash] = useState(false)
     const [content, setContent] = useState('')
-
-    useEffect(() => {
-        console.log("json", content);
-        // console.log("parse", content)
-        // let html = convertToHTML(content)
-        // console.log({html});
-    }, [content])
+    const [openModal, setOpenModal] = useState(false)
 
     let danteProps = {
         data_storage: {
             url: "xxx",
-            // save_handler: save_handler(editorContent)
             save_handler: function (editorContext, content) {
-                // console.log("editor", editorContext.editorContent.blocks);
                 setContent(editorContext.editorContent)
             }
         }
@@ -96,6 +37,7 @@ const DraftTextEditor = (props) => {
         if (e.keyCode !== 13)
             setTitle(e.target.value)
     }
+
 
     const handlePreviewBackground = (e) => {
         console.log("reviewBK")
@@ -125,22 +67,34 @@ const DraftTextEditor = (props) => {
 
     const BackGroundImageUpload = () => {
         return (
-            <div
-                className="container upload-img-box">
-                <label
-                    style={{ display: 'block', cursor: 'pointer' }}
-                    htmlFor="image-input">
-                    <input type="file"
-                        hidden
-                        id="image-input"
-                        name="image-input"
-                        className="image-input"
-                        onChange={handlePreviewBackground} />
-                    <AiOutlinePlus style={{ fontSize: '6rem' }} />
-                    <p>Browse your background photo</p>
-                </label>
+            <React.Fragment>
+                <div
+                    className="container upload-img-box">
+                    <label
+                        style={{ display: 'block', cursor: 'pointer' }}
+                        htmlFor="image-input">
+                        <input type="file"
+                            hidden
+                            id="image-input"
+                            name="image-input"
+                            className="image-input"
+                            onChange={handlePreviewBackground} />
+                        <AiOutlinePlus style={{ fontSize: '6rem' }} />
+                        <p>Browse your background photo</p>
+                    </label>
+                    <p>Or <a className="btn-text" onClick={()=>setOpenUnsplash(true)}>Search Unsplash</a></p>
+                </div >
 
-            </div >
+                <div>
+                    {
+                        isOpenUnsplash && <UnsplashImage
+                            setPreviewBackground={setPreviewBackground}
+                            setIsUploadBackground={setIsUploadBackground}
+                            setOpenUnsplash={setOpenUnsplash} />
+                    }
+                </div>
+            </React.Fragment>
+
         )
     }
 
@@ -170,11 +124,12 @@ const DraftTextEditor = (props) => {
                     :
                     <BackGroundImageUpload />
             }
+
             <div className="container" style={{ padding: '3rem 0' }}>
                 <Dante
                     {...danteProps}
                     bodyPlaceholder={"Do what you will"}
-                    // default_wrappers={[{ className: 'text-editor', block: 'unstyled' }]}
+                // default_wrappers={[{ className: 'text-editor', block: 'unstyled' }]}
                 />
 
             </div>
