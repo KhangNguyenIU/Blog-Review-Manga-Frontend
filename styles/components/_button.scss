@@ -2,6 +2,11 @@
     color: #7FC8A9;
 }
 
+.btn-text{
+    text-decoration: underline;
+    color: $color-primary-light-brown;
+    cursor: pointer;
+}
 
 .button-outlined{
     padding: 1rem 2rem;
