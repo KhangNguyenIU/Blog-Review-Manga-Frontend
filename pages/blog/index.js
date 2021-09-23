@@ -1,6 +1,6 @@
 import renderHTML from 'react-render-html'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect , ReactNode} from 'react';
 export default function Blog(props) {
     const [body, setBody] = useState('')
     const [render, setRender] =useState('')

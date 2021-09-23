@@ -34,7 +34,6 @@ const UnsplashImage = (props) => {
         if (query) {
             const url = "https://api.unsplash.com/search/photos?page=" + page + "&query=" + query + "&client_id=" + client
             Axios.get(url).then(response => {
-                console.log(response)
                 if (response.data.results.length == 0) {
                     setError(true)
                     setPhotos([])
@@ -47,6 +46,7 @@ const UnsplashImage = (props) => {
     }, [page])
 
     const handleSubmit = () => {
+        setPage(1)
         if (query) {
             const url = "https://api.unsplash.com/search/photos?page=" + page + "&query=" + query + "&client_id=" + client
             Axios.get(url).then(response => {
@@ -103,9 +103,7 @@ const UnsplashImage = (props) => {
                 {
                     error &&
                     <div className="center">
-
                         <Image src={errorPic} width={500} height={400} />
-
                     </div>
 
                 }

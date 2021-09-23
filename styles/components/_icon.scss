@@ -1,0 +1,29 @@
+
+.icon-outlined{
+    display: inline-flex;
+    width: 3.6rem;
+    height: 3.6rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.5);
+    color:rgba(0,0,0,.5);
+    margin: 0 1rem;
+    transition-duration:200ms ;
+    cursor: pointer;
+}
+
+.rotate-45{
+    transform: rotate(45deg);
+
+}
+
+.icon{
+    transition-property: background, transform;
+    transition-duration: 300ms ;
+    font-size: 2rem;
+    font-weight: 100;
+}
+
+
+

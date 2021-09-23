@@ -5,6 +5,7 @@
 }
 html{
     font-size: 10px;
+    overflow-x: hidden;
 }
 body{
     font-size: 2rem;
@@ -30,4 +31,11 @@ body{
   content: attr(placeholder);
   pointer-events: none;
   display: block; /* For Firefox */
+}
+
+@media screen and (max-width:900px) {
+  .container{
+    width: 100%;
+    margin: 0 2rem;
+  }
 }

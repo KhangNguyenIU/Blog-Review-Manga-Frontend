@@ -11,6 +11,10 @@
 @import "components/texteditor";
 @import "components/tooleditor";
 @import "components/unsplash";
+@import "components/icon";
+@import "components/navbar";
+
+@import "pages/signin.scss";
 
 .my-custom-h2{
     font-size: 6rem !important;

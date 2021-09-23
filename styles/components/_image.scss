@@ -1,10 +1,14 @@
 .general-image{
-    display: block;
-    width: 100%;
+    min-width: 70rem;
     margin-left: auto;
     margin-right: auto;
     object-fit: cover;
-    max-height: 80vh;
+    max-height: 100vh;
+    opacity: .9;
+    &:active , &:hover{
+        opacity: 1;
+        box-shadow: 0 15px 20px rgba(0,0,0,.15);
+    }
 }
 
 .img-small{
