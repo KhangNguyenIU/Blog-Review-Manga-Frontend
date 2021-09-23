@@ -1,14 +1,14 @@
-import { useState } from "react";
-import TextEditor from "../Components/BlogEditor/TextEditor";
 import DraftTextEditor from "../Components/DraftTextEditor";
-import UnsplashImage from "../Components/UnsplashImage";
+import Layout from "../Components/Layout";
 
 
 
 export default function Home() {
   return (
     <div>
-      <DraftTextEditor />
+      <Layout>
+        <DraftTextEditor />
+      </Layout>
     </div>
   )
 }

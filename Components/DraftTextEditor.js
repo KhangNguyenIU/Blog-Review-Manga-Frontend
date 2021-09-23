@@ -1,14 +1,16 @@
 
 import React, { useEffect, useState } from 'react'
-import Dante from 'Dante2'
+import Dante, { ImageBlockConfig } from 'Dante2'
 import {
     AiOutlineCloudUpload,
     AiOutlinePlus,
     AiOutlinePicLeft,
     AiOutlineClose
 } from 'react-icons/ai'
-import { convertToHTML } from 'draft-convert';
 import UnsplashImage from './UnsplashImage';
+import TitleText from './Title';
+import { createBlog } from '../api/blog';
+import { convertBlobToBinary } from '../utilites/image.helpers';
 /**
 * @author
 * @function DraftText
@@ -19,124 +21,56 @@ import UnsplashImage from './UnsplashImage';
 const DraftTextEditor = (props) => {
     const [title, setTitle] = useState("")
     const [previewedBackground, setPreviewBackground] = useState('')
-    const [isUploadBackground, setIsUploadBackground] = useState(false)
-    const [isOpenUnsplash, setOpenUnsplash] = useState(false)
     const [content, setContent] = useState('')
-    const [openModal, setOpenModal] = useState(false)
 
+    useEffect(() => {
+
+
+    })
     let danteProps = {
         data_storage: {
             url: "xxx",
             save_handler: function (editorContext, content) {
                 setContent(editorContext.editorContent)
             }
-        }
+        },
+
     };
 
-    const handleTitleChange = (e) => {
-        if (e.keyCode !== 13)
-            setTitle(e.target.value)
-    }
+    const handlePublish =async  () => {
 
+        await convertBlobToBinary(content)
 
-    const handlePreviewBackground = (e) => {
-        console.log("reviewBK")
-        if (e.target.files && e.target.files[0]) {
-            let reader = new FileReader()
-
-            reader.onload = function (e) {
-                setPreviewBackground(e.target.result)
-                setIsUploadBackground(true)
-            }
-            reader.readAsDataURL(e.target.files[0])
+        let blog = {
+            title: title,
+            cover: previewedBackground,
+            body: JSON.stringify(content),
+            exceprt: "This is exceprt"
         }
-    }
-
-    const TitleText = () => {
-        return (
-            <p className="title-primary"
-                style={{ paddingTop: '100px' }}
-                contentEditable
-                placeholder="Title..."
-                onKeyDown={handleTitleChange}
-            >
-
-            </p>
-        )
-    }
-
-    const BackGroundImageUpload = () => {
-        return (
-            <React.Fragment>
-                <div
-                    className="container upload-img-box">
-                    <label
-                        style={{ display: 'block', cursor: 'pointer' }}
-                        htmlFor="image-input">
-                        <input type="file"
-                            hidden
-                            id="image-input"
-                            name="image-input"
-                            className="image-input"
-                            onChange={handlePreviewBackground} />
-                        <AiOutlinePlus style={{ fontSize: '6rem' }} />
-                        <p>Browse your background photo</p>
-                    </label>
-                    <p>Or <a className="btn-text" onClick={()=>setOpenUnsplash(true)}>Search Unsplash</a></p>
-                </div >
-
-                <div>
-                    {
-                        isOpenUnsplash && <UnsplashImage
-                            setPreviewBackground={setPreviewBackground}
-                            setIsUploadBackground={setIsUploadBackground}
-                            setOpenUnsplash={setOpenUnsplash} />
-                    }
-                </div>
-            </React.Fragment>
-
-        )
-    }
-
-    const ImagePreview = () => {
-        return (
-            <div style={{ display: 'block', textAlign: 'center', marginBottom: '4rem' }}>
-                <div className="icon-single"
-                >
-                    <AiOutlineClose
-                        onClick={() => { setPreviewBackground(""); setIsUploadBackground(false) }} />
-                </div>
-                <img
-                    className="general-image"
-                    src={previewedBackground}
-                    alt="alt-img" >
-                </img>
-            </div>
-        )
+        // console.log(blog)
+        createBlog(blog).then(response => console.log(response)).catch(error => console.log(error))
     }
 
     return (
         <React.Fragment>
-            <TitleText />
-            {
-                isUploadBackground ?
-                    <ImagePreview />
-                    :
-                    <BackGroundImageUpload />
-            }
+            <TitleText
+                previewedBackground={previewedBackground}
+                setPreviewBackground={setPreviewBackground}
+                title={title}
+                setTitle={setTitle}
+            />
 
             <div className="container" style={{ padding: '3rem 0' }}>
                 <Dante
                     {...danteProps}
                     bodyPlaceholder={"Do what you will"}
-                // default_wrappers={[{ className: 'text-editor', block: 'unstyled' }]}
                 />
 
             </div>
 
-            <div className="container center">
+            <div className="container center" style={{ display: 'block' }}>
                 <button className="button-outlined">Back</button>
-                <button className="button-outlined">Publish</button>
+                <button className="button-outlined" onClick={handlePublish}>Publish</button>
             </div>
         </React.Fragment>
 
@@ -144,4 +78,4 @@ const DraftTextEditor = (props) => {
 
 }
 
-export default DraftTextEditor
+export default DraftTextEditor;

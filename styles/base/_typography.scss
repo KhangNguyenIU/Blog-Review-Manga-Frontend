@@ -7,3 +7,46 @@
     margin-bottom: 1rem;
     color: #3E2C41;
 }
+
+.blur-text{
+    color: #ccc;
+}
+
+.link-text{
+    text-decoration: none;
+    transition: .3s;
+    color: black;
+    font-family: 'Nunito', sans-serif;
+    margin-right: 2rem;
+    &:hover{
+        color: $color-primary-light-brown;
+    }
+}
+
+.text-btn{
+    font-size: 1.6rem;
+    color: $color-primary-light-grey;
+    font-family: "Nunito", sans-serif;
+    outline: none;
+    text-decoration: none;
+    margin-left:2rem ;
+}
+
+.small-text-primary{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.6rem;
+    color: black;
+}
+
+.small-text-secondary{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.6rem;
+    color: black;
+}
+
+
+.strong-text-primary{
+    font-size: 1.6rem;
+    color : $color-primary-light-brown;
+    font-weight: 700;
+}
