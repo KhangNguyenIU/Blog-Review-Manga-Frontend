@@ -13,9 +13,13 @@
 @import "components/unsplash";
 @import "components/icon";
 @import "components/navbar";
+@import "components/Modal";
+@import "components/card";
+@import "components/footer";
 
 @import "pages/signin.scss";
-
+@import "pages/blog";
+@import "pages/home.scss";
 .my-custom-h2{
     font-size: 6rem !important;
 }

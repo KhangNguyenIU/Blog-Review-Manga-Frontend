@@ -1,18 +1,16 @@
-
-
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import React, { useEffect, useRef, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import { useSelector } from 'react-redux';
 import Divider from '@mui/material/Divider';
+import { signout } from '../../api/auth';
+import { useRouter } from 'next/router';
 const UserModal = (props) => {
 
     const userstate = useSelector(state => state.user)
     const menuRef = useRef()
-
+    const router = useRouter()
+    
     useEffect(() => {
-
         let handleMouswDown = (event) => {
             if (!menuRef.current.contains(event.target)) {
                 setOpen(false)
@@ -29,22 +27,33 @@ const UserModal = (props) => {
     const handleClick = (event) => {
         setOpen(true)
     };
+    
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    
+    const logout = () => {
+        signout()
+            .then(response =>{
+                console.log("helo")
+                router.reload(window.location.pathname)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <React.Fragment>
             {
                 userstate &&
                 <div className="drop-down" >
-                    <div>
                     <Avatar
                     className="cursor"
                         src={userstate.avatar}
                         onClick={handleClick}
                     ></Avatar>
-                    </div>
-                    <div className={`drop-down-menu${open ? " menu-active" : ""}`}
+                    <div 
+                    className={`drop-down-menu${open ? " menu-active" : ""}`}
                         ref={menuRef}
                     >
                         <ul className="drop-down-list">
@@ -61,7 +70,7 @@ const UserModal = (props) => {
                                     <Divider />
                                 </li>
                             </li>
-                            <li>
+                            <li onClick={()=>router.push('/new-story')}>
                                 Write a story
                             </li>
                             <li>
@@ -86,11 +95,12 @@ const UserModal = (props) => {
                             <li>
                                 Settings
                             </li>
-                            <li>
+                            <li onClick={logout}>
                                 Sign out
                             </li>
                         </ul>
                     </div>
+              
                 </div>
 
             }
@@ -99,17 +109,5 @@ const UserModal = (props) => {
 }
 
 
-{/* <Menu
-    id="basic-menu"
-    anchorEl={anchorEl}
-    open={open}
-    onClose={handleClose}
-    MenuListProps={{
-        'aria-labelledby': 'basic-button',
-    }}
->
-    <MenuItem onClick={handleClose}>Profile</MenuItem>
-    <MenuItem onClick={handleClose}>My account</MenuItem>
-    <MenuItem onClick={handleClose}>Logout</MenuItem>
-</Menu> */}
+
 export default UserModal

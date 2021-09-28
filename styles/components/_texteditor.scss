@@ -1,6 +1,5 @@
 
 .graf--p{
-  // display: inline;
     outline: none;
     margin-bottom: 3rem;
     font-family: 'Hina Mincho', serif;
@@ -14,7 +13,6 @@
 }
 
 .upload-img-box{
-
   text-align: center;
   color: $color-primary-light-grey;
   border: dotted 2px $color-primary-light-grey;
@@ -44,4 +42,23 @@
   margin-right: 2rem;
   font-family: 'Hina Mincho', serif;
 
+}
+
+.cate-box{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 2.5rem 2rem;
+  
+}
+
+@media screen and (max-width:600px) {
+  .graf--figure{
+    float: none !important;
+    margin: 0 !important;
+  }
+  .graf--layoutOutsetLeft{
+    margin: 0 !important;
+    width: 100% !important;
+  }
 }

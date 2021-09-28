@@ -7,12 +7,25 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
-.top-margin{
-    margin-top: 50px;
+
+.flex-column-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.flex-row-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top-margin-5{
+    margin-top: 5rem;
 }
 
 .top-margin-2{
-    margin-top: 10rem;
+    margin-top: 2rem;
 }
 
 .bottom-margin-2{
@@ -26,6 +39,10 @@
 
 .left-margin-2{
     margin-left: 2rem;
+}
+
+.right-margin-2{
+    margin-right: 2rem;
 }
 
 .hidden{
