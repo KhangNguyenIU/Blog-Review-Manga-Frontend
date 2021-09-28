@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import NavBar from './NavBar';
-import ModalAuth from '../Components/ModalAuth';
+import Modal from '../Components/Modal';
 import { Provider, useSelector } from 'react-redux'
 
 import store from '../state/store'
+import SwitchAuth from './auth/SwitchAuth';
+import Footer from './Footer';
 const Layout = ({ children }) => {
-  
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
 
     return (
         <React.Fragment>
@@ -16,9 +19,14 @@ const Layout = ({ children }) => {
                 <NavBar handleOpen={handleOpen} />
                 <main>
                     {children}
-                    <ModalAuth open={open} handleClose={handleClose} />
-                </main>
 
+                    <Modal
+                        open={open}
+                        handleClose={handleClose}>
+                        <SwitchAuth />
+                    </Modal>
+                </main>
+                <Footer/>
             </Provider>
         </React.Fragment>
     )

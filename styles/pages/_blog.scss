@@ -1,0 +1,89 @@
+
+.vertical-card{
+    width: 100%;
+    height: 47rem;
+    box-shadow: 0 7px 8px rgba(0,0,0,.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+}
+.vertical-card--info{
+    margin:2rem 2rem;
+}
+
+.vertical-card--image{
+    height: 20rem;
+    width: 100%;
+    opacity: .95;
+    object-fit: center;
+}
+
+.vertical-card-exceprt{
+    font-size: 1.6rem;
+    color: rgba(0,0,0,.7);
+    font-family: 'Hina Mincho', serif;
+    text-align: justify;
+    margin-bottom: 2rem;
+}
+.vertical-card-date{
+    font-size: 1.4rem;
+    color: rgba(0,0,0,.6);
+    font-family: 'Hina Mincho', sans-serif;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+.vertical-image{
+    object-fit: center;
+    width: 100%;
+    height: 100%;
+}
+
+.vertical-card--title{
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: black;
+    font-family: 'Hina Mincho', serif;
+    margin-bottom: .5rem;
+    height: 6rem;
+}
+
+.vertical-card--author{
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #FFB085;
+    font-family: 'Nunito', sans-serif;
+}
+
+.vertical-card--button{
+    position: relative;;
+    font-family: "Nunito", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+
+    &::after{
+        content: "";
+        width: 2.6rem;
+        height: 3px;
+        background: rgba(0,0,0,.5);
+        border-radius: 20%;
+        position: absolute;
+        top:20px;
+        left: 43%;
+    }
+    &::before{
+        content: "";
+        width: .8rem;
+        height: 3px;
+        background: rgba(0,0,0,.5);
+        border-radius: 20%;
+        position: absolute;
+        top:20px;
+        left: 55%;
+    }
+}
+

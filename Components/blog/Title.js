@@ -17,9 +17,8 @@ const TitleText = (props) => {
 
 
     const handleTitleChange = (e) => {
-        console.log(e.target.innerHTML);
         if (e.keyCode !== 13)
-            props.setTitle(e.target.innerHTML)
+            props.setTitle(e.target.innerText)
     }
 
     const handleImageClick = (e) => {
@@ -57,7 +56,7 @@ const TitleText = (props) => {
 
     return (
         <React.Fragment>
-            <div className="center"
+            <div className="flex-column-center"
             >
                 <p
                     className="title-primary"

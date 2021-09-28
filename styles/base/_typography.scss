@@ -32,6 +32,13 @@
     margin-left:2rem ;
 }
 
+.profile-text-primary{
+    font-size: 2rem;
+    color: rgba(0,0,0,.6);
+    font-family: 'Hina Mincho', serif;
+    
+}
+
 .small-text-primary{
     font-family: 'Nunito', sans-serif;
     font-size: 1.6rem;
@@ -40,8 +47,8 @@
 
 .small-text-secondary{
     font-family: 'Nunito', sans-serif;
-    font-size: 1.6rem;
-    color: black;
+    font-size: 1.4rem;
+    color: $color-primary-light-grey;
 }
 
 
@@ -49,4 +56,31 @@
     font-size: 1.6rem;
     color : $color-primary-light-brown;
     font-weight: 700;
+}
+
+
+@media screen and (max-width:768px) {
+    .title-primary{
+        font-size: 3rem;
+    }
+}
+
+.section-text-primary{
+    color: #696969;
+    font-size: 1.3rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+    // line-height: 24px;
+    text-transform: uppercase;
+    position: relative;
+    margin: 1rem;
+    &::after{
+        position: absolute;
+        content: "";
+        width: 4.5rem;
+        height: 1.5px;
+        background-color: #664E88;
+        top: 25px;
+        left:0;
+    }
 }

@@ -5,9 +5,9 @@ import { FcGoogle } from 'react-icons/fc'
 import { HiOutlineMail } from 'react-icons/hi'
 import { googleLogin } from '../../api/auth';
 import  {AiOutlineClose} from 'react-icons/ai'
-
+import { useRouter } from 'next/router';
 const GoogleAuth = (props) => {
-
+    const router = useRouter()
     const responseGoogle = (response) => {
         const tokenId = response.tokenId
 
@@ -18,7 +18,7 @@ const GoogleAuth = (props) => {
             .then(response => response)
             .then(()=>{
                 props.handleClose()
-                console.log("close")
+                router.reload('/')
             })
             .catch(err => console.log(err))
     }

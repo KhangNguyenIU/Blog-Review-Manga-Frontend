@@ -2,11 +2,10 @@ import { createApi } from 'unsplash-js';
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import { BsSearch } from 'react-icons/bs'
 import { Grid, IconButton } from '@material-ui/core';
 import Image from 'next/image';
-import errorPic from '../public/404.png'
+import errorPic from '../../public/404.png'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 /**
@@ -59,13 +58,15 @@ const UnsplashImage = (props) => {
                     setPhotos(response.data.results)
 
                 }
+            }).catch(error=>{
+                setError(false)
             })
         }
     }
 
     const handleChange = e => {
-
-        setQuery(e.target.value)
+            setQuery(e.target.value)
+        
     }
 
     const handleImageClick = (url) => {
@@ -86,7 +87,7 @@ const UnsplashImage = (props) => {
 
     return (
         <React.Fragment>
-            <div className="container ">
+            <div className="container  ">
                 <div className="search">
                     <input
                         className="input-primary "

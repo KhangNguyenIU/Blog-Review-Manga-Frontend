@@ -8,8 +8,8 @@
 }
 
 .navbar-left{
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
 }
 
 .profile-text{
@@ -33,20 +33,20 @@
 
 .drop-down{
     position: relative;
-
+    display: inline-block;
 }
 
 .drop-down-menu{
     position: absolute;
     visibility: hidden;
-    right: -7rem;
+    right: 0;
     top: 5rem;
     padding:2rem;
     box-shadow: 0 2px 5px rgba(0,0,0,.1);
     opacity: 0 ;
     transform: translateY(-1.5rem);
     transition: 200ms ease-in-out;
-   width: 24rem;
+     width: 24rem;
     z-index: 999;
     background-color: #fff;
 }
@@ -68,34 +68,23 @@ display: flex;
     padding: .5rem 0;
     cursor: pointer;
     font-size: 1.7rem;
+    color: $color-primary-light-grey;
+
+    &:hover{
+        color: black;
+    }
 }
 
 .drop-down-list-left{
 margin-left: 1rem;
 }
 
-.back-drop{
-    visibility: hidden;
-    position: fixed;
-    z-index: 999;
-    top:0;
-    left: 0;
-    background-color: rgba(0,0,0,.3);
-    width: 100%;
-    height: 100vh;
-    padding: 1rem;
-}
-
-.back-drop--active{
-    visibility: visible;
-}
 
 
 @media screen and (max-width:900px) {
     .navbar-wrapper{
-        padding: 1rem 1rem;
+        padding: 1rem 2rem;
         width: 100%;
-        margin: 0 2rem;
     }
    
 }

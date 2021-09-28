@@ -5,7 +5,7 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASEURL
 
 export const isAuth = () => axios({
     method: 'post',
-    url:'/auth',
+    url: '/auth',
     withCredentials: true
 })
 
@@ -40,6 +40,8 @@ export const signup = user => axios({
     },
     data: user
 })
+
+export const signout = () => axios.get("http://localhost:8000/auth/signout", { withCredentials: true })
 
 export const test = () => axios({
     method: 'get',
