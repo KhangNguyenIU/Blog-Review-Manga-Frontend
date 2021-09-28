@@ -90,7 +90,9 @@ const DraftTextEditor = (props) => {
                     {
                         categories &&
                         categories.map((cate, index) => (
-                            <div style={{ display: 'inline-block', padding: '.6rem' }}>
+                            <div 
+                            key={index}
+                            style={{ display: 'inline-block', padding: '.6rem' }}>
                                 <Chip
                                     label={cate.name}
                                     variant={`${selectedCategories.includes(cate.id) ? "" : "outlined"}`}

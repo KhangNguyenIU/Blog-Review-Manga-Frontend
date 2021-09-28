@@ -15,7 +15,7 @@ export default function Home({ blogs, message }) {
   return (
     <div>
       <Layout>
-  
+
         {
           message ? <h1>{message}</h1> :
             <>
@@ -30,8 +30,9 @@ export default function Home({ blogs, message }) {
                   <Grid item xs={12} md={8}>
                     {
                       blogs.map((blog, index) => (
-
-                        <CardBlog blog={blog} />
+                        <CardBlog blog={blog}
+                          key={index}
+                        />
                       ))
                     }
                   </Grid>
@@ -53,7 +54,7 @@ export async function getStaticProps() {
   try {
     const blogs = await getBlogs()
 
-    if(blogs.error)
+    if (blogs.error)
       return {
         message: "No post available"
       }
