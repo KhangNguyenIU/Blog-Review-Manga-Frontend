@@ -15,10 +15,12 @@ const GoogleAuth = (props) => {
             tokenId: tokenId
         }
         googleLogin(token)
-            .then(response => response)
+            .then(response => {
+                console.log("login success",response)
+            })
             .then(()=>{
                 props.handleClose()
-                router.reload('/')
+                // router.reload('/')
             })
             .catch(err => console.log(err))
     }

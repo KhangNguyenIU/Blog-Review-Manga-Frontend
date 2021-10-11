@@ -12,7 +12,7 @@ const GridBlogs = ({ blogs }) => {
             <Grid container spacing={2}>
                 {
                     blogs.map((blog, index) => (
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={4} key={index}>
                         <VerticalCard blog ={blog}/>
                     </Grid>
                 ))

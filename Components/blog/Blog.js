@@ -49,6 +49,7 @@ const Blog = ({blog}) => {
                     {
                         blog.categories && blog.categories.map((cate, index) => (
                             <div
+                                key ={index}
                                 className="bottom-margin-2"
                                 style={{ display: 'inline-block', padding: ' 0 .6rem' }}>
                                 <Chip

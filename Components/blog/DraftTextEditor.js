@@ -61,22 +61,26 @@ const DraftTextEditor = (props) => {
 
     const handlePublish = async () => {
         setLoading(true)
-        await convertBlobToBinary(content)
+        console.log(content)
+        const body = await convertBlobToBinary(content)
+        
         let blog = {
             title: title,
             cover: previewedBackground,
-            body: JSON.stringify(content),
+            body: JSON.stringify(body),
             exceprt: "This is exceprt",
             categories: selectedCategories,
             user: userstate.id
         }
-        console.log(blog)
+        console.log(body)
+
         createBlog(blog)
             .then(response =>{
                 console.log(response)
                 setLoading(false)
             })
             .catch(error =>{
+                console.log(error.message)
                 setLoading(false)
             })
     }
@@ -85,12 +89,14 @@ const DraftTextEditor = (props) => {
         return (
             <div div className="auth-box" >
                 <p className="graf--p bottom-margin-2">One more step!</p>
-                <p className="small-text-secondary">Seclect your blog's tags or create new tag.</p>
+                <p className="small-text-secondary">Seclect your blog&prime;s tags or create new tag.</p>
                 <div className="cate-box">
                     {
                         categories &&
                         categories.map((cate, index) => (
-                            <div style={{ display: 'inline-block', padding: '.6rem' }}>
+                            <div 
+                            key={index}
+                            style={{ display: 'inline-block', padding: '.6rem' }}>
                                 <Chip
                                     label={cate.name}
                                     variant={`${selectedCategories.includes(cate.id) ? "" : "outlined"}`}
@@ -103,7 +109,7 @@ const DraftTextEditor = (props) => {
                 </div>
 
                 <p className="small-text-secondary">
-                    Already? Let's publish it!
+                    Already&#x2047; Let&prime;s publish it
                 </p>
                 <button
                     onClick={handlePublish}
