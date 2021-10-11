@@ -19,6 +19,7 @@ const NavBar = (props) => {
         (async () => {
             try {
                 const data = await isAuth()
+                console.log("user",data.data)
                 addUser(data.data)
             } catch (error) {
                 console.log(error)

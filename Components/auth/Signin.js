@@ -1,15 +1,16 @@
 import React, {useState} from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { signin } from '../../api/auth'
-
+import  { useRouter } from 'next/router'
 const Signin = (props) => {
-
+    const router = useRouter
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState('')
 
     const onEmailChange = e => {
         e.preventDefault()
         setEmail(e.target.value)
+        router.push('/')
     }
     const onPasswordChange = e => {
         e.preventDefault()
@@ -23,7 +24,7 @@ const Signin = (props) => {
 
         signin(user).then(data=>{
             props.handleClose
-            // console.log(data)
+            console.log(data)
         }).catch(err=>{
             console.log(err)
         })
