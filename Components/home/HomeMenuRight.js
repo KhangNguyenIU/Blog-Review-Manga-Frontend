@@ -1,19 +1,24 @@
-
-
-const HomeMenuRight = ({blogs}) => {
+import Link from "next/link"
+const HomeMenuRight = ({ blogs, categories }) => {
 
     return (
         <div className="home-menu-right">
             <div className="menu-category">
                 <p className="section-text-primary">Categories</p>
-                <ul>
-                    <li>Manga</li>
-                    <li>Seinen</li>
-                    <li>Anime</li>
-                </ul>
+                <div className="menu-category-list top-margin-2">
+                    {
+                        categories && categories.map((cate, index) => (
+                            <div key={index} className="button-outlined-small">
+                                <Link href="/">
+                                    {cate.name}
+                                </Link>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
 
-            <div className="menu-recent-post">
+            {/* <div className="menu-recent-post">
                 <p className="section-text-primary">Recent Post</p>
 
                 <ul className="recent-post-list">
@@ -35,7 +40,7 @@ const HomeMenuRight = ({blogs}) => {
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> */}
         </div>
     )
 }

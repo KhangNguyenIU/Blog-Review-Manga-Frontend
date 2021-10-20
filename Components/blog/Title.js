@@ -58,26 +58,28 @@ const TitleText = (props) => {
         <React.Fragment>
             <div className="flex-column-center"
             >
-                <p
-                    className="title-primary"
-                    contentEditable
-                    onInput={handleTitleChange}
-                    placeholder="Title..."
-                    style={{ paddingTop: '100px' }}
-                >
-                </p>
-                <ToolBar 
-                previewedBackground={props.previewedBackground}
-                setPreviewBackground={props.setPreviewBackground}
-                setIsUploadBackground={setIsUploadBackground}
-                setOpenUnsplash={setOpenUnsplash}
+                <div className="container">
+                    <p
+                        className="title-primary"
+                        contentEditable
+                        onInput={handleTitleChange}
+                        placeholder="Title..."
+                        style={{ paddingTop: '100px' }}
+                    >
+                    </p>
+                </div>
+                <ToolBar
+                    previewedBackground={props.previewedBackground}
+                    setPreviewBackground={props.setPreviewBackground}
+                    setIsUploadBackground={setIsUploadBackground}
+                    setOpenUnsplash={setOpenUnsplash}
                 />
 
             </div>
 
             {
                 isUploadBackground &&
-                    <ImagePreview />
+                <ImagePreview />
             }
         </React.Fragment>
     )
