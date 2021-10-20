@@ -30,7 +30,10 @@ const DraftTextEditor = (props) => {
     }, [])
 
     const handleOpen = () => setOpenCateModal(true);
-    const handleClose = () => setOpenCateModal(false);
+    const handleClose = () => {
+        setOpenCateModal(false);
+
+    }
     const getCategories = async () => {
         try {
             const cates = await getAllCategories()
@@ -61,28 +64,35 @@ const DraftTextEditor = (props) => {
 
     const handlePublish = async () => {
         setLoading(true)
-        console.log(content)
         const body = await convertBlobToBinary(content)
-        
-        let blog = {
-            title: title,
-            cover: previewedBackground,
-            body: JSON.stringify(body),
-            exceprt: "This is exceprt",
-            categories: selectedCategories,
-            user: userstate.id
-        }
-        console.log(body)
+        // console.log(body)
+        if (body) {
+            setContent(body)
+            let blog = {
+                title: title,
+                cover: previewedBackground,
+                body: body,
+                categories: selectedCategories,
+                user: userstate.id
+            }
 
-        createBlog(blog)
-            .then(response =>{
-                console.log(response)
-                setLoading(false)
-            })
-            .catch(error =>{
-                console.log(error.message)
-                setLoading(false)
-            })
+            console.log(blog.body)
+            setTimeout(() => {
+                createBlog(blog)
+                    .then(response => {
+                        console.log(response)
+                        setLoading(false)
+                        setSelectiedCategories([])
+
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                        setLoading(false)
+                    })
+            }, 2000)
+
+        }
+
     }
 
     const Category = () => {
@@ -94,9 +104,9 @@ const DraftTextEditor = (props) => {
                     {
                         categories &&
                         categories.map((cate, index) => (
-                            <div 
-                            key={index}
-                            style={{ display: 'inline-block', padding: '.6rem' }}>
+                            <div
+                                key={index}
+                                style={{ display: 'inline-block', padding: '.6rem' }}>
                                 <Chip
                                     label={cate.name}
                                     variant={`${selectedCategories.includes(cate.id) ? "" : "outlined"}`}
@@ -116,9 +126,9 @@ const DraftTextEditor = (props) => {
                     className="button-primary"
                 >Publish
                 </button>
-                {loading && 
-                
-                <CircularProgress color="inherit" />
+                {loading &&
+
+                    <CircularProgress color="inherit" />
                 }
 
             </div >

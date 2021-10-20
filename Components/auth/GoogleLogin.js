@@ -16,11 +16,11 @@ const GoogleAuth = (props) => {
         }
         googleLogin(token)
             .then(response => {
-                console.log("login success",response)
+                
             })
             .then(()=>{
                 props.handleClose()
-                // router.reload('/')
+                router.reload('/')
             })
             .catch(err => console.log(err))
     }

@@ -1,19 +1,32 @@
 import axios from "axios"
 
 export const convertBlobToBinary = async (content) => {
+    // console.log("content",content)
     let array = [...content.blocks]
-    array.map( async (block, index) => {
+    const unresolvedData = array.map(async (block, index) => {
         if (block.type == "image") {
             let blobUrl = block.data.url
-            const blobData = await fetch(blobUrl).then(blob =>blob.blob())
+            const blobData = await fetchBlog(blobUrl)
+            if(blobData){
                 var reader = new FileReader()
                 reader.readAsDataURL(blobData)
-                reader.onloadend = function(){
-                    array[index].data.url = reader.result
+                reader.onloadend = function () {
+                    block.data.url = reader.result
                 }
+            }
         }
+        return block
     })
-    content.blocks = array
-    return content
+    const result = await Promise.all(unresolvedData)
+    if(result){
+        content.blocks = result
+        return content
+    }
+    return;
 }
 
+const fetchBlog = async (url) => {
+    const blobData = await fetch(url).then(blob=>blob.blob())
+    if (blobData)
+        return blobData
+}

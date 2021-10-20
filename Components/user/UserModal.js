@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 import Divider from '@mui/material/Divider';
 import { signout } from '../../api/auth';
 import { useRouter } from 'next/router';
+import Modal from '../Modal'
+import CreateCategory from '../Category/CreateCategory';
 const UserModal = (props) => {
 
     const userstate = useSelector(state => state.user)
     const menuRef = useRef()
     const router = useRouter()
-    
+    const [open, setOpen] = useState(false)
+    const [openCateModal,setOpenCateModal] = useState(false)
     useEffect(() => {
         let handleMouswDown = (event) => {
             if (!menuRef.current.contains(event.target)) {
@@ -23,11 +26,18 @@ const UserModal = (props) => {
         }
     })
 
-    const [open, setOpen] = useState(false)
     const handleClick = (event) => {
         setOpen(true)
     };
     
+    const handleOpenCateModal =()=>{
+        setOpenCateModal(true)
+    }
+
+    const handleCloseCateModal =()=>{
+        setOpenCateModal(false)
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -85,7 +95,12 @@ const UserModal = (props) => {
                             <li>
                                 Lists
                             </li>
-
+                            {
+                                userstate.role ==0 &&
+                                (<li
+                                onClick={handleOpenCateModal}
+                                >Create category</li>)
+                            }
                             <li>
                                 <Divider />
                             </li>
@@ -100,7 +115,12 @@ const UserModal = (props) => {
                             </li>
                         </ul>
                     </div>
-              
+                    <Modal
+                        open={openCateModal}
+                        handleClose={handleCloseCateModal}
+                    >
+                       <CreateCategory/> 
+                    </Modal>
                 </div>
 
             }

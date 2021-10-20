@@ -7,54 +7,40 @@ import GridBlogs from "../Components/blog/GridBlog";
 import Layout from "../Components/Layout";
 import HomeMenuRight from "../Components/home/HomeMenuRight";
 import { test, testSetCookie } from "../api/auth";
-export default function Home({ blogs}) {
+import { getAllCategories } from "../api/category";
+export default function Home({ blogs,categories }) {
 
-  const setCookie =()=>{
-    testSetCookie().then(response=>{
-      console.log(response)
-    }).catch(error=>{
-      console.log(error)
-    })
-  }
 
-  const testCookie=()=>{
-      test().then(response=>{
-        console.log(response)
-      })
-  }
   return (
     <div>
       <Layout>
+        <>
+          <div className="header">
+            <div className="header-title">
+              <p className="title-primary">Manga - Sharing - Reviews</p>
+            </div>
+          </div>
 
-         
-            <>
-              <div className="header">
-                <div className="header-title">
-                  <p className="title-primary">Manga - Sharing - Reviews</p>
-                </div>
-              </div>
+          <div className="container-medium">
 
-              <div className="container-medium">
 
-                <button onClick={setCookie}>Set Cookie</button>
-                <button onClick={testCookie}> Test Cookie</button>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={8}>
-                    {
-                      blogs && blogs.map((blog, index) => (
-                        <CardBlog blog={blog}
-                          key={index}
-                        />
-                      ))
-                    }
-                  </Grid>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8}>
+                {
+                  blogs && blogs.map((blog, index) => (
+                    <CardBlog blog={blog}
+                      key={index}
+                    />
+                  ))
+                }
+              </Grid>
 
-                  <Grid item xs={12} md={4}>
-                    <HomeMenuRight />
-                  </Grid>
-                </Grid>
-              </div>
-            </>
+              <Grid item xs={12} md={4}>
+                <HomeMenuRight categories={categories}/>
+              </Grid>
+            </Grid>
+          </div>
+        </>
       </Layout>
     </div>
   )
@@ -62,18 +48,18 @@ export default function Home({ blogs}) {
 
 
 export async function getStaticProps() {
-
   try {
     const blogs = await getBlogs()
+    const categories = await getAllCategories()
     return {
-      props: { blogs: blogs.data }
+      props: {
+        blogs: blogs.data ? blogs.data : [],
+        categories: categories.data ? categories.data : []
+      }
     }
   } catch (error) {
     return {
       notFound: true
     }
   }
-
-
-
 }
