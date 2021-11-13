@@ -1,47 +1,23 @@
 import React, { useState } from 'react'
+import useDebounce from '../hooks/useDebounce'
+import useTimeout from '../hooks/useTimeout'
 
+const Signin = (props) => {
 
-const Signin = () => {
+    const [count, setCount] = useState(0)
+    const { clear, reset} = useTimeout(()=>setCount(0), 1000)
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState('')
-
-    const onEmailChange = e => {
-        e.preventDefault()
-        setEmail(e.target.value)
-    }
-    const onPasswordChange = e => {
-        e.preventDefault()
-        setEmail(e.target.value)
-    }
-    const handleSubmit = () => {
-
-    }
-
+    useDebounce(()=>alert(count), 2000, [count])
     return (
         <React.Fragment>
             <div className="auth-box">
-                <p className="graf--p">Sign in with email</p>
-
-
-                <p style={{ maxWidth: '30rem', textAlign: 'center', }} className="small-text-primary  bottom-margin-5">Enter the email address associated with your account, and we’ll send a magic link to your inbox.</p>
-
-                <p> Email</p>
-                <input
-                    value={email}
-                    onChange={onEmailChange}
-                    className="input-primary bottom-margin-2" />
-                <p> Password</p>
-                <input
-                    value={password}
-                    onChange={onPasswordChange}
-                    className="input-primary bottom-margin-2" />
-
-                <button
-                    className="button-primary bottom-margin-2"
-                >Continue</button>
-
-                <p className="strong-text-primary cursor"> Back</p>
+                <h1>test</h1>
+                <div>
+                    <div>{count}</div>
+                    <button onClick={()=>setCount(count=>count+1)}>Click</button>
+                    <button onClick={clear}>clear</button>
+                    <button onClick={reset}>reset</button>
+                </div>
             </div>
         </React.Fragment>
     )

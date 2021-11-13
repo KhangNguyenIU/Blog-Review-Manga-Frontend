@@ -10,13 +10,11 @@ const GoogleAuth = (props) => {
     const router = useRouter()
     const responseGoogle = (response) => {
         const tokenId = response.tokenId
-
         let token = {
             tokenId: tokenId
         }
         googleLogin(token)
             .then(response => {
-                
             })
             .then(()=>{
                 props.handleClose()
@@ -46,7 +44,7 @@ const GoogleAuth = (props) => {
                     onFailure={responseGoogle}
                     render={renderProps => (
                         <div
-                            className="button-outlined btn-long"
+                            className="button-outlined btn-long bottom-margin-2"
                             onClick={renderProps.onClick}
                             disabled={renderProps.disabled}>
                             <FcGoogle />

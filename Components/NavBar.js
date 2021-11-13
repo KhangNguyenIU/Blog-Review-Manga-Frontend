@@ -7,19 +7,19 @@ import { ActionCreator } from '../state/index'
 import { bindActionCreators } from 'redux'
 import UserModal from './user/UserModal'
 import { useRouter } from 'next/router'
+import {FiSearch} from 'react-icons/fi'
+import {BsBookmarks} from 'react-icons/bs'
 const NavBar = (props) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const { addUser } = bindActionCreators(ActionCreator, dispatch)
     const state = useSelector(state => state.user)
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-     
 
+    useEffect(() => {
         (async () => {
             try {
                 const data = await isAuth()
-                // console.log("user",data.data)
                 addUser(data.data)
             } catch (error) {
                 console.log(error)
@@ -39,10 +39,12 @@ const NavBar = (props) => {
             {
                 loading &&
                 <div className="navbar-left">
+                    <BsBookmarks className="cursor right-margin-2"/>
+                    <FiSearch className="cursor right-margin-2"/>
                     {
                         (state && state.email) ? <UserModal /> :
                             <span onClick={props.handleOpen} >
-                                <a className="button-primary cursor" >Sign in</a>
+                                <a className="button-outlined cursor" >Sign in</a>
                             </span>
                     }
                 </div>

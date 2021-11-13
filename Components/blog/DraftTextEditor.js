@@ -32,7 +32,6 @@ const DraftTextEditor = (props) => {
     const handleOpen = () => setOpenCateModal(true);
     const handleClose = () => {
         setOpenCateModal(false);
-
     }
     const getCategories = async () => {
         try {
@@ -76,7 +75,6 @@ const DraftTextEditor = (props) => {
                 user: userstate.id
             }
 
-            console.log(blog.body)
             setTimeout(() => {
                 createBlog(blog)
                     .then(response => {
