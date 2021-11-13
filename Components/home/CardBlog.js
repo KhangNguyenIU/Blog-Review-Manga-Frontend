@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { convertDateString } from '../../utilites/date'
 import Link from 'next/link'
 const CardBlog = ({ blog }) => {
 
+    // useEffect(()=>{
+    //     console.log(blog)
+    // },)
     return (
         <React.Fragment>
             <div className="card-wrapper">
@@ -18,7 +21,7 @@ const CardBlog = ({ blog }) => {
 
                 </Link>
                 <div className="card-date">
-                    Posted on {convertDateString(blog.created_at)} by {blog.username}
+                    Posted on {convertDateString(blog.created_at)} by {blog.user.username}
                 </div>
 
                 <Link href={`/blog/${blog.id}`} className="card-image">

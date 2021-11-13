@@ -20,6 +20,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.flex-row-between{
+    display:flex;
+    justify-content : space-between;
+}
+
 .top-margin-5{
     margin-top: 5rem;
 }

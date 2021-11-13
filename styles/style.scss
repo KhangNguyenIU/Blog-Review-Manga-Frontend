@@ -16,10 +16,12 @@
 @import "components/Modal";
 @import "components/card";
 @import "components/footer";
-
+@import  "components/pagination";
 @import "pages/signin.scss";
 @import "pages/blog";
 @import "pages/home.scss";
+
+@import "abstracts/mixins";
 .my-custom-h2{
     font-size: 6rem !important;
 }

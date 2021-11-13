@@ -1,3 +1,5 @@
+@import "../abstracts/mixins";
+
 .active-btn{
     color: #7FC8A9;
 }
@@ -15,7 +17,6 @@
     font-size: 1.8rem;
     font-weight: 500;
     border: 1px solid #ccc;
-    margin: 1rem 2rem;
     background-color: white;
     border-radius: 3rem;
     cursor: pointer;
@@ -23,6 +24,11 @@
     &:hover{
         border: 1px solid rgba(0,0,0,.5);
     }  
+    @include respond(mobile){
+        font-size: 1.2rem;
+        padding: .5rem 1.5rem;
+    }
+   
 }
 
 .button-outlined-small{
@@ -51,8 +57,8 @@
 .button-primary{
     display: inline-flex;
     align-items: center;
-    padding: 1rem 3.5rem;
-    font-size: 1.6rem;
+    padding: 1rem 2.5rem;
+    font-size: 1.8rem;
     font-weight: 500;
     border: 1px solid #ccc;
     margin: 1rem 2rem;
@@ -64,6 +70,30 @@
         border: 1px solid rgba(0,0,0,.5);
     }
     
+}
+
+.button-teriary{
+    display: inline-flex;
+    font-family: "Lato", sans-serif;
+    align-items: center;
+    padding: .9rem 1.8rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 1rem 1rem;
+    color:white;
+    background-color: #f2f2f2;
+    border-radius: 4rem;
+    cursor: pointer;
+    transition: 200ms;
+    letter-spacing: 1px;
+    &:hover{
+        background-color: rgb(230,230,230);
+    }
+    
+    a{
+        color: #292929;
+        text-decoration: none;
+    }
 }
 .btn-long{
     width: 25rem;

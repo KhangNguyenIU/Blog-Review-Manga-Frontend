@@ -5,30 +5,31 @@ import Blog from "../../Components/blog/Blog"
 import Layout from '../../Components/Layout'
 import Head from 'next/head'
 const BlogPage = (props) => {
-    // const head = () => (
-    //     <Head>
-    //         <title>
-    //             {props.blog.title} | {APP_NAME}
-    //         </title>
-    //         <meta name="description" content={props.blog.exceprt} />
-    //         <link rel="canonical" href={`${DOMAIN}/blogs/${query.slug}`} />
-    //         <meta property="og:title" content={`${blog.title}| ${APP_NAME}`} />
-    //         <meta property="og:description" content={props.blog.exceprt} />
-    //         <meta property="og:type" content="webiste" />
-    //         <meta property="og:url" content={`${DOMAIN}/blogs/${query.slug}`} />
-    //         <meta property="og:site_name" content={`${APP_NAME}`} />
+    const {blog} = props
+    const head = () => (
+        <Head>
+            <title>
+                {blog.title} 
+            </title>
+            <meta name="description" content={blog.exceprt} />
+            <link rel="canonical" href={`${process.env.NEXT_PUBLIC_FE_URL}/blog/${blog.id}`} />
+            <meta property="og:title" content={`${blog.title}`} />
+            <meta property="og:description" content={blog.exceprt} />
+            <meta property="og:type" content="webiste" />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_FE_URL}/blog/${blog.id}`} />
+            <meta property="og:site_name" content={`${process.env.NEXT_PUBLIC_FE_URL}`} />
 
-    //         <meta property="og:image" content={`${API}/blog/photo/${blog.slug}`} />
-    //         <meta property="og:image:secure_url" ccontent={`${API}/blog/photo/${blog.slug}`} />
-    //         <meta property="og:image:type" content="image/jpg" />
-    //         <meta property="fb:app_id" content={`${FB_APP_ID}`} />
-    //     </Head>
-    // );
-   
+            <meta property="og:image" content={`${blog.cover}`} />
+            <meta property="og:image:secure_url" content={`${blog.cover}`} />
+            <meta property="og:image:type" content="image/png" />
+        </Head>
+    );
+
     return (
         <React.Fragment>
+            {head()}
             <Layout>
-                <Blog blog = {props.blog}/>
+                <Blog blog={props.blog} />
             </Layout>
         </React.Fragment>
     )
@@ -36,10 +37,10 @@ const BlogPage = (props) => {
 
 export default BlogPage
 
-export async function getStaticPaths(){
+export async function getStaticPaths() {
     const blogs = await getBlogs().then(response => response.data)
-    const paths= blogs.map((blog, index)=>{
-        return{
+    const paths = blogs.map((blog, index) => {
+        return {
             params: {
                 slug: `${blog.id}`
             }
@@ -53,13 +54,13 @@ export async function getStaticPaths(){
 }
 
 
-export async function getStaticProps(context){
-    const { params } = context    
+export async function getStaticProps(context) {
+    const { params } = context
 
-    const data  = await axios.get(`http://localhost:8000/blogs/${params.slug}`)
-    .then(response=>response.data)
+    const data = await axios.get(`http://localhost:8000/blogs/${params.slug}`)
+        .then(response => response.data)
     return {
-        props:{
+        props: {
             blog: data
         }
     }

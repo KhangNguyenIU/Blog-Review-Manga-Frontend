@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
-        <link rel="shortcut icon" href="../public/favico.png" />
+        <link rel="icon" href="/favico.png" />
     </Head>
     return <Component {...pageProps} />
 

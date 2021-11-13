@@ -1,19 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { signin } from '../../api/auth'
-import  { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 const Signin = (props) => {
-    const router = useRouter
+    const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState('')
 
     const onEmailChange = e => {
         e.preventDefault()
         setEmail(e.target.value)
-        router.push('/')
     }
     const onPasswordChange = e => {
-        e.preventDefault()
         setPassword(e.target.value)
     }
     const handleSubmit = () => {
@@ -22,10 +20,12 @@ const Signin = (props) => {
             password
         }
 
-        signin(user).then(data=>{
-            props.handleClose
-            console.log(data)
-        }).catch(err=>{
+        signin(user).then(data => {
+        })
+        .then(()=>{
+            props.handleClose()
+            router.reload('/')
+        }).catch(err => {
             console.log(err)
         })
     }

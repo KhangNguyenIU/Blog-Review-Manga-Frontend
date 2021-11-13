@@ -5,11 +5,14 @@
     padding: 1rem 4em;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 5px 8px  rgba(0,0,0,.1);
 }
 
 .navbar-left{
-    // display: flex;
-    // align-items: center;
+    display: flex;
+    align-items: center;
+    color : #757575;
+    
 }
 
 .profile-text{

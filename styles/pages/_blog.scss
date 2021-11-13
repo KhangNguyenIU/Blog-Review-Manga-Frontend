@@ -87,3 +87,26 @@
     }
 }
 
+.blog-infor-tool{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+
+    .tool-menu{
+        display: inline-flex;
+        svg:not(first-child){
+            margin: 1rem;
+        }
+
+        .tool-list{
+            transition: 200ms all;
+            display: flex;
+            svg{
+                cursor: pointer;
+            }
+        }
+    }
+
+    
+}

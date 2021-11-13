@@ -8,6 +8,7 @@ import Image from 'next/image';
 import errorPic from '../../public/404.png'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import useDebounce from '../../hooks/useDebounce';
 /**
 * @author
 * @function 
@@ -29,23 +30,11 @@ const UnsplashImage = (props) => {
     const [page, setPage] = useState(1)
     const [error, setError] = useState(false)
     const client = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY
-    useEffect(() => {
-        if (query) {
-            const url = "https://api.unsplash.com/search/photos?page=" + page + "&query=" + query + "&client_id=" + client
-            Axios.get(url).then(response => {
-                if (response.data.results.length == 0) {
-                    setError(true)
-                    setPhotos([])
-                } else {
-                    setError(false)
-                    setPhotos(response.data.results)
-                }
-            })
-        }
-    }, [page])
+  
 
+    useDebounce(()=>handleSubmit(), 1000, [page,query])
     const handleSubmit = () => {
-        setPage(1)
+        console.log("submit")
         if (query) {
             const url = "https://api.unsplash.com/search/photos?page=" + page + "&query=" + query + "&client_id=" + client
             Axios.get(url).then(response => {

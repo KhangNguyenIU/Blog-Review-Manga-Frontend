@@ -58,8 +58,8 @@ const TitleText = (props) => {
         <React.Fragment>
             <div className="flex-column-center"
             >
-                <div className="container">
-                    <p
+                <div className="container" >
+                <p
                         className="title-primary"
                         contentEditable
                         onInput={handleTitleChange}

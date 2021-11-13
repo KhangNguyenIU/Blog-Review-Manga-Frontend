@@ -23,3 +23,9 @@ export const fetchBlogById = (id)=> axios({
     method: 'get',
     url: '/blogs/'+ id,
 })
+
+export const deleteBlogById = (id)=> axios({
+    method: 'delete',
+    url: '/blogs/' +id,
+    withCredentials: true
+})
