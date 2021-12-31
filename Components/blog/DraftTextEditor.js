@@ -8,12 +8,14 @@ import Modal from '../Modal'
 import Chip from '@mui/material/Chip';
 import { useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router';
 /**
 * @author
 * @function DraftText
 **/
 
 const DraftTextEditor = (props) => {
+    const router = useRouter()
     const [title, setTitle] = useState("")
     const [previewedBackground, setPreviewBackground] = useState('')
     const [content, setContent] = useState('')
@@ -81,7 +83,7 @@ const DraftTextEditor = (props) => {
                         console.log(response)
                         setLoading(false)
                         setSelectiedCategories([])
-
+                        router.push('/')
                     })
                     .catch(error => {
                         console.log(error.message)
