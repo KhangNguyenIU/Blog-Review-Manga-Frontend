@@ -4,7 +4,7 @@ export const convertBlobToBinary = async (content) => {
     // console.log("content",content)
     let array = [...content.blocks]
     const unresolvedData = array.map(async (block, index) => {
-        if (block.type == "image") {
+        if (block.type === "image") {
             let blobUrl = block.data.url
             const blobData = await fetchBlog(blobUrl)
             if(blobData){

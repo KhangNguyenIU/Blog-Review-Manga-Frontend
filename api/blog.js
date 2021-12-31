@@ -9,9 +9,9 @@ export const createBlog = (blog) => axios({
     data:blog
 })
 
-export const getBlogs =() => axios({
+export const getBlogs =(page, limit) => axios({
     method: 'get',
-    url: '/blogs'
+    url: `/blogs?page=${page}&limit=${limit}`
 })
 
 export const getAllCategories = ()=> axios({
@@ -28,4 +28,9 @@ export const deleteBlogById = (id)=> axios({
     method: 'delete',
     url: '/blogs/' +id,
     withCredentials: true
+})
+
+export const getTotalBlogsNumber = ()=> axios({
+    method : 'get',
+    url: 'blogs/total/page'
 })

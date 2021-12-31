@@ -1,6 +1,6 @@
 import axios from "axios"
 import React, { useEffect } from "react"
-import { getBlogs } from "../../api/blog"
+import { fetchBlogById, getBlogs } from "../../api/blog"
 import Blog from "../../Components/blog/Blog"
 import Layout from '../../Components/Layout'
 import Head from 'next/head'
@@ -56,9 +56,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
     const { params } = context
-
-    const data = await axios.get(`http://localhost:8000/blogs/${params.slug}`)
-        .then(response => response.data)
+    console.log(params)
+    // const data = await axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/${params.slug}`)
+    //     .then(response => response.data)
+    const data = await fetchBlogById(params.slug).then(res=>res.data)
     return {
         props: {
             blog: data
